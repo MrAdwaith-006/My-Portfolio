@@ -19,11 +19,18 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function App() {
   useEffect(() => {
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+    window.scrollTo(0, 0);
+
     const lenis = new Lenis({
       duration: 1.2,
       smoothWheel: true,
       smoothTouch: false
     });
+
+    lenis.scrollTo(0, { immediate: true });
 
     lenis.on("scroll", ScrollTrigger.update);
     const update = (time) => lenis.raf(time * 1000);

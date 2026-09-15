@@ -20,11 +20,18 @@ export default function Terminal() {
   const [inputVal, setInputVal] = useState("");
   const [cmdHistory, setCmdHistory] = useState(["whoami"]);
   const [historyIdx, setHistoryIdx] = useState(-1);
-  const terminalEndRef = useRef(null);
+  const terminalBodyRef = useRef(null);
   const inputRef = useRef(null);
+  const isFirstRender = useRef(true);
 
   useEffect(() => {
-    terminalEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    if (terminalBodyRef.current) {
+      terminalBodyRef.current.scrollTop = terminalBodyRef.current.scrollHeight;
+    }
   }, [history]);
 
   const handleCommand = (rawCmd) => {
@@ -201,7 +208,7 @@ export default function Terminal() {
             </div>
           </div>
 
-          <div className="terminal-body">
+          <div className="terminal-body" ref={terminalBodyRef}>
             {history.map((item, idx) => {
               if (item.type === "system") {
                 return (
@@ -247,7 +254,6 @@ export default function Terminal() {
               />
               <span className="term-cursor"></span>
             </div>
-            <div ref={terminalEndRef} />
           </div>
 
           <div className="terminal-footer">
