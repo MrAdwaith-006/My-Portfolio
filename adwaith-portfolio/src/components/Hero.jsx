@@ -15,7 +15,22 @@ export default function Hero() {
         .from(".hero-title-line", { y: 120, opacity: 0, duration: 1.1, stagger: 0.14 }, "-=0.6")
         .from(".hero-description", { y: 30, opacity: 0, duration: 0.7 }, "-=0.5")
         .from(".hero-actions button, .hero-actions a", { y: 30, opacity: 0, duration: 0.6, stagger: 0.1 }, "-=0.4")
-        .from(".hero-3d-wrapper", { scale: 0.75, opacity: 0, duration: 1.2, ease: "back.out(1.4)" }, "-=0.8")
+        .fromTo(
+          ".hero-3d-wrapper",
+          {
+            scale: 2.6,
+            opacity: 0,
+            filter: "blur(6px)"
+          },
+          {
+            scale: 1,
+            opacity: 1,
+            filter: "blur(0px)",
+            duration: 1.6,
+            ease: "expo.out"
+          },
+          "-=1.0"
+        )
         .from(".scroll-indicator", { opacity: 0, duration: 0.6 }, "-=0.4");
     }, heroRef);
 

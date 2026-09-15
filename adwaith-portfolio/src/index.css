@@ -779,6 +779,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
+  transform-origin: center center;
 }
 
 .hero-3d-canvas {
