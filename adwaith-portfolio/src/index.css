@@ -1312,6 +1312,26 @@ main {
   transform: scale(1.02);
 }
 
+.card-visual-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.45s ease;
+}
+
+.project-card:hover .card-visual-img {
+  transform: scale(1.05);
+}
+
+.card-visual-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(8, 8, 10, 0.08) 0%, rgba(8, 8, 10, 0.5) 100%);
+  pointer-events: none;
+}
+
 .card-visual-pattern {
   position: absolute;
   inset: 0;

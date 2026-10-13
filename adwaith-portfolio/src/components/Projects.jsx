@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { profile } from "../config/profile";
@@ -8,6 +8,7 @@ gsap.registerPlugin(ScrollTrigger);
 function ProjectCard({ project, index }) {
   const cardRef = useRef(null);
   const glowRef = useRef(null);
+  const [imgError, setImgError] = useState(false);
 
   const handleMouseMove = (e) => {
     const card = cardRef.current;
@@ -28,7 +29,10 @@ function ProjectCard({ project, index }) {
     
     if (glowRef.current) {
       glowRef.current.style.opacity = "1";
-      glowRef.current.style.background = `radial-gradient(circle 280px at ${x}px ${y}px, rgba(255, 90, 31, 0.18), transparent 70%)`;
+      const glowRgba = project.accent === "#00f0ff"
+        ? "rgba(0, 240, 255, 0.22)"
+        : (project.accent ? `${project.accent}2e` : "rgba(255, 90, 31, 0.18)");
+      glowRef.current.style.background = `radial-gradient(circle 280px at ${x}px ${y}px, ${glowRgba}, transparent 70%)`;
     }
   };
 
@@ -52,17 +56,45 @@ function ProjectCard({ project, index }) {
       <div ref={glowRef} className="card-spotlight-glow" aria-hidden="true" />
 
       <div className="card-header">
-        <div className="card-number">0{index + 1}</div>
+        <div className="card-number" style={project.accent ? { color: project.accent } : undefined}>0{index + 1}</div>
         <span className="card-category">{project.category}</span>
       </div>
 
-      <div className="card-visual">
-        <div className="card-visual-pattern">
-          <div className="pattern-circle"></div>
-          <div className="pattern-grid"></div>
+      <div
+        className="card-visual"
+        style={project.accent ? {
+          background: `linear-gradient(135deg, ${project.accent}1f 0%, rgba(14, 14, 20, 0.95) 100%)`
+        } : undefined}
+      >
+        {project.image && !imgError ? (
+          <>
+            <img
+              src={project.image}
+              alt={`${project.title} interface preview`}
+              className="card-visual-img"
+              loading="lazy"
+              onError={() => setImgError(true)}
+            />
+            <div className="card-visual-overlay" aria-hidden="true" />
+          </>
+        ) : (
+          <>
+            <div className="card-visual-pattern">
+              <div
+                className="pattern-circle"
+                style={project.accent ? { borderColor: `${project.accent}4d` } : undefined}
+              />
+              <div className="pattern-grid" />
+            </div>
+            <div className="card-visual-title">{project.title}</div>
+          </>
+        )}
+        <div
+          className="card-visual-badge"
+          style={project.accent ? { color: project.accent, borderColor: `${project.accent}40` } : undefined}
+        >
+          {project.badge || "FEATURED WORK"}
         </div>
-        <div className="card-visual-title">{project.title}</div>
-        <div className="card-visual-badge">FEATURED WORK</div>
       </div>
 
       <div className="card-content">
@@ -78,26 +110,30 @@ function ProjectCard({ project, index }) {
         </div>
 
         <div className="card-actions">
-          {project.demo && project.demo !== project.github && (
+          {project.demo && (
             <a
               href={project.demo}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="card-btn primary-card-btn magnetic"
+              aria-label={`View ${project.title} project`}
             >
-              <span>LIVE DEMO</span>
-              <span className="btn-arrow">↗</span>
+              <span>{project.demoLabel || "VIEW PROJECT"}</span>
+              <span className="btn-arrow" aria-hidden="true">↗</span>
             </a>
           )}
-          <a
-            href={project.github}
-            target="_blank"
-            rel="noreferrer"
-            className={`card-btn ${project.demo && project.demo !== project.github ? "secondary-card-btn" : "primary-card-btn"} magnetic`}
-          >
-            <span>GITHUB REPOSITORY</span>
-            <span className="btn-arrow">↗</span>
-          </a>
+          {project.github && (
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`card-btn ${project.demo ? "secondary-card-btn" : "primary-card-btn"} magnetic`}
+              aria-label={`View ${project.title} on GitHub repository`}
+            >
+              <span>GITHUB REPOSITORY</span>
+              <span className="btn-arrow" aria-hidden="true">↗</span>
+            </a>
+          )}
         </div>
       </div>
     </div>

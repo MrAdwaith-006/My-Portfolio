@@ -1,3 +1,5 @@
+import vexPreview from "../assets/vex-preview.jpg";
+
 export const profile = {
   name: "Adwaith Ajay",
   tagline: "Developer, Creator & Builder",
@@ -92,6 +94,31 @@ export const profile = {
       demo: "https://github.com/MrAdwaith-006/quick_griev",
       featured: true,
       accent: "#ff5a1f"
+    },
+    {
+      id: "vex-ai-assistant",
+      title: "V.E.X. AI Assistant",
+      category: "AI / Android Development",
+      description: "V.E.X. AI Assistant is a futuristic AI-powered Android application designed to deliver an interactive chat experience through a voice-responsive interface, animated telemetry visuals, and customizable UI elements, with a focus on local AI integration.",
+      features: [
+        "AI chat integration",
+        "voice-responsive interface",
+        "animated telemetry visuals",
+        "customizable user interface",
+        "mobile app shortcuts"
+      ],
+      tags: [
+        "AI Chat Integration",
+        "Voice-Responsive Interface",
+        "Animated Telemetry Visuals",
+        "Customizable UI",
+        "Mobile App Shortcuts"
+      ],
+      github: "https://github.com/MrAdwaith-006/v.e.x-mobile",
+      demo: "https://github.com/MrAdwaith-006/v.e.x-mobile",
+      image: vexPreview,
+      featured: true,
+      accent: "#00f0ff"
     }
   ]
 };
